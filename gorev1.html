@@ -11,8 +11,8 @@
     <div class="container">
         <h1 class="mt-3">Gezelim Görelim</h1>
         <!--  <form id="frmUlke" class="d-flex gap-2"   action="https://google.com/search" >   -->
-        
-            <form id="frmUlke" class="d-flex gap-2">
+
+        <form id="frmUlke" class="d-flex gap-2">
             <div class="flex-fill">
                 <!-- <input id="txtUlke" type="text" class="form-control" name="q" placeholder="Ülke.." required>-->
                 <input id="txtUlke" type="text" class="form-control" placeholder="Ülke.." required>
@@ -32,31 +32,28 @@
         const dizi = ["Fransa", "İtalya", "Avustralya", "Amerika", "Almanya", "İsviçre", "papua Yeni Gine", "Finlandiya", "Japonya"];
         const ul = document.getElementById("ulkeler");
 
-        function listele(){
-            ul.innerHTML=""; // önce ul listesini boşalt
+        function listele() {
+            ul.innerHTML = ""; // önce ul listesini boşalt
 
-       
-
-
-        dizi.forEach((ulke, indeks) => {
-            const li = document.createElement("li");
-            li.textContent = ulke;
-            li.className = "list-group-item";
-            // Görev çift tıklanan liste öğeleri kaldırılsın
-            // li'ye çift  tıklandığında sağında atanan fonksiton çağrılsın.
-            /*             li.ondblclick = function(){
-                            li.remove();
-                        }; 
-                        
-                        //tek satırda yukarıdaki fonksiyonun yazılımı
-            */
-            li.ondblclick = () => /* li.remove(); */{
-                dizi.splice(indeks, 1);
-                listele();
-            }
-            ul.append(li);
-        });
-    }
+            dizi.forEach((ulke, indeks) => {
+                const li = document.createElement("li");
+                li.textContent = ulke;
+                li.className = "list-group-item";
+                // Görev çift tıklanan liste öğeleri kaldırılsın
+                // li'ye çift  tıklandığında sağında atanan fonksiton çağrılsın.
+                /*             li.ondblclick = function(){
+                                li.remove();
+                            }; 
+                            
+                            //tek satırda yukarıdaki fonksiyonun yazılımı
+                */
+                li.ondblclick = () => /* li.remove(); */ {
+                    dizi.splice(indeks, 1);
+                    listele();
+                }
+                ul.append(li);
+            });
+        }
 
 
         /*  Görev: form submit aşamasında submit event'ini iptal et onun yerine ülke kutusundaki değeri al ve dizinin başına ekle ve yukarıdaki listeleme komutunu çalıştır. */
@@ -66,9 +63,10 @@
         function formTeslim(event) {
             event.preventDefault(); // formu teslim etme
             let ulkeAd = txt.value;
+            ulkeAd = ulkeAd[0].toLocaleUpperCase("tr") + ulkeAd.substr(1).toLocaleLowerCase("tr");
+            // ulkeAd = ulkeAd[0].toUpperCase() + ulkeAd.slice(1);
             dizi.unshift(ulkeAd);
-            //ulkeAd = ulkeAd[0].toLocaleUpperCase("tr") + ulkeAd.substr(1).toLocaleLowerCase("tr");
-            txt.value="";
+            txt.value = "";
 
             // görev: listeleme metodu oluştur ve çağır
             listele();
